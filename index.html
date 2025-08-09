@@ -4,15 +4,62 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Simple$$ — Múltiplas Caixas</title>
-  <link rel="stylesheet" href="./style.css?v=2" />
+
+  <!-- CSS externo -->
+  <link rel="stylesheet" href="./style.css?v=3" />
+
+  <!-- CSS crítico inline -->
+  <style>
+    :root{
+      --bg:#f2f4f8; --fg:#222; --card:#fff; --muted:#666;
+      --primary:#0d6efd; --danger:#dc3545; --ok:#28a745;
+    }
+    *{box-sizing:border-box}
+    body{font-family:"Segoe UI",system-ui,-apple-system,Arial,sans-serif;
+      background:var(--bg);color:var(--fg);margin:0;}
+    main{max-width:700px;margin:0 auto;min-height:100dvh;padding:1.2rem}
+    .topbar{display:flex;align-items:center;gap:.6rem}
+    .topbar h1{margin:.2rem 0;font-size:1.6rem}
+    .subtitle{color:var(--muted);font-size:.9rem}
+    .panel-head{display:flex;justify-content:space-between;align-items:center;margin:.5rem 0}
+    .card{background:var(--card);border-radius:12px;padding:1rem;
+      box-shadow:0 2px 10px rgba(0,0,0,.05);margin:.8rem 0;}
+    button{border:none;border-radius:10px;padding:.7rem 1rem;cursor:pointer;font-size:1rem;}
+    button.primary{background:var(--primary);color:#fff}
+    button.ghost{background:#e9eef6;color:#111}
+    button.danger{background:var(--danger);color:#fff}
+    .box-list{list-style:none;padding:0;margin:0}
+    .box-item{display:flex;justify-content:space-between;align-items:center;
+      padding:.8rem 1rem;border-radius:12px;background:#fff;
+      box-shadow:0 1px 6px rgba(0,0,0,.04);margin:.6rem 0;cursor:pointer}
+    .box-left{display:flex;align-items:center;gap:.8rem}
+    .color-dot{width:8px;height:20px;border-radius:4px}
+    .badge{background:#eef1f6;border-radius:999px;padding:.1rem .5rem;color:#333;font-size:.75rem}
+    .balance-positive{color:var(--ok)}
+    .balance-negative{color:var(--danger)}
+    footer.foot{margin:2rem 0 1rem;color:#777;text-align:center;font-size:.85rem}
+    fieldset.period-field{border:1px solid #eee;border-radius:10px;padding:.6rem;margin:.6rem 0;}
+    .hidden{display:none}
+    .actions{display:flex;gap:.6rem;justify-content:flex-end;margin-top:1rem}
+    input[type="text"],input[type="number"]{
+      width:100%;padding:.7rem;border:1px solid #ddd;border-radius:10px;font-size:16px;
+    }
+    .row{display:flex;gap:.6rem;align-items:center}
+    .row.end{justify-content:flex-end}
+    .expense-list{list-style:none;padding:0;margin:0}
+    .exp-item{
+      display:flex;justify-content:space-between;align-items:center;
+      border-bottom:1px solid #eee;padding:.5rem 0
+    }
+    .exp-item .actions{display:flex;gap:.4rem}
+    .edit-btn{background:#ffc107;color:#111;border:none;border-radius:8px;padding:.35rem .6rem;cursor:pointer;font-size:.85rem}
+    .del-btn{background:var(--danger);color:#fff;border:none;border-radius:8px;padding:.35rem .6rem;cursor:pointer;font-size:.85rem}
+  </style>
 </head>
 <body>
   <main>
     <header class="topbar">
-      <div class="brand">
-        <div class="logo">$$</div>
-        <h1>Simple$$</h1>
-      </div>
+      <h1>💵 Simple$$</h1>
       <span class="subtitle">Caixas simples por período</span>
     </header>
 
@@ -20,9 +67,10 @@
     <section id="dashboard">
       <div class="panel-head">
         <h2>Caixas</h2>
-        <button id="newBoxBtn" class="btn-outline">
-          <span class="plus">+</span> Nova Caixa
-        </button>
+        <div>
+          <button id="newBoxBtn" class="primary">+ Nova caixa</button>
+          <button id="resetAll" class="danger">Reset</button>
+        </div>
       </div>
 
       <ul id="boxList" class="box-list"></ul>
@@ -34,7 +82,7 @@
 
       <!-- Formulário de nova caixa -->
       <div id="newBoxForm" class="card hidden">
-        <h3 class="card-title">Nova Caixa</h3>
+        <h3>Nova Caixa</h3>
 
         <label>Nome da caixa
           <input type="text" id="boxName" placeholder="Ex.: Mercado" />
@@ -42,18 +90,9 @@
 
         <fieldset class="period-field">
           <legend>Período de controle</legend>
-          <label class="radio-lg">
-            <input type="radio" name="period" value="diario" checked />
-            <span>Diário</span>
-          </label>
-          <label class="radio-lg">
-            <input type="radio" name="period" value="semanal" />
-            <span>Semanal</span>
-          </label>
-          <label class="radio-lg">
-            <input type="radio" name="period" value="mensal" />
-            <span>Mensal</span>
-          </label>
+          <label><input type="radio" name="period" value="diario" checked /> Diário</label>
+          <label><input type="radio" name="period" value="semanal" /> Semanal</label>
+          <label><input type="radio" name="period" value="mensal" /> Mensal</label>
         </fieldset>
 
         <label>Valor para o período
@@ -61,15 +100,15 @@
         </label>
 
         <div class="actions">
-          <button id="cancelNewBox" class="btn-ghost">Cancelar</button>
-          <button id="createBox" class="btn-primary">Criar Caixa</button>
+          <button id="cancelNewBox" class="ghost">Cancelar</button>
+          <button id="createBox" class="primary">Criar Caixa</button>
         </div>
       </div>
     </section>
 
     <!-- Visão da Caixa -->
     <section id="boxView" class="hidden">
-      <button class="btn-ghost back" id="backToDashboard">← Voltar</button>
+      <button class="ghost back" id="backToDashboard">← Voltar</button>
 
       <div class="box-header">
         <div class="color-bar" id="boxColor"></div>
@@ -85,26 +124,26 @@
       </div>
 
       <div class="card">
-        <h3 class="card-title">Registrar gasto</h3>
+        <h3>Registrar gasto</h3>
         <div class="row">
           <input type="number" id="expenseValue" placeholder="Valor do gasto" />
-          <button id="addExpense" class="btn-primary">Adicionar</button>
+          <button id="addExpense" class="primary">Adicionar</button>
         </div>
       </div>
 
       <div class="card">
-        <h3 class="card-title">Gastos do período</h3>
+        <h3>Gastos do período</h3>
         <ul id="expenseList" class="expense-list"></ul>
       </div>
 
       <div class="row end">
-        <button id="editBox" class="btn-ghost">Editar caixa</button>
-        <button id="deleteBox" class="btn-danger">Excluir caixa</button>
+        <button id="editBox" class="ghost">Editar caixa</button>
+        <button id="deleteBox" class="danger">Excluir caixa</button>
       </div>
 
       <!-- Editor da caixa -->
       <div id="editBoxForm" class="card hidden">
-        <h3 class="card-title">Editar Caixa</h3>
+        <h3>Editar Caixa</h3>
 
         <label>Nome
           <input type="text" id="editName" />
@@ -112,9 +151,9 @@
 
         <fieldset class="period-field">
           <legend>Período</legend>
-          <label class="radio-lg"><input type="radio" name="editPeriod" value="diario" /><span>Diário</span></label>
-          <label class="radio-lg"><input type="radio" name="editPeriod" value="semanal" /><span>Semanal</span></label>
-          <label class="radio-lg"><input type="radio" name="editPeriod" value="mensal" /><span>Mensal</span></label>
+          <label><input type="radio" name="editPeriod" value="diario" /> Diário</label>
+          <label><input type="radio" name="editPeriod" value="semanal" /> Semanal</label>
+          <label><input type="radio" name="editPeriod" value="mensal" /> Mensal</label>
         </fieldset>
 
         <label>Valor por período
@@ -122,17 +161,17 @@
         </label>
 
         <div class="actions">
-          <button id="cancelEdit" class="btn-ghost">Cancelar</button>
-          <button id="saveEdit" class="btn-primary">Salvar</button>
+          <button id="cancelEdit" class="ghost">Cancelar</button>
+          <button id="saveEdit" class="primary">Salvar</button>
         </div>
       </div>
     </section>
 
     <footer class="foot">
-      <small>Simple$$ — minimalista, local e privado • UTC‑3</small>
+      <small>Simple$$ — minimalista, local e privado • UTC-3</small>
     </footer>
   </main>
 
-  <script src="./js/app.js?v=2" defer></script>
+  <script src="./js/app.js?v=3" defer></script>
 </body>
 </html>
