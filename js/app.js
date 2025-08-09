@@ -39,11 +39,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ===== Utilitários de número/data/moeda =====
   function parseNum(input) {
-    // Aceita "12,34" e "12.34", ignora espaços
+    // Aceita "12,34" e "12.34"; remove separador de milhar.
     if (typeof input !== "string" && typeof input !== "number") return NaN;
     const s = String(input).trim().replace(/\./g, "").replace(",", ".");
-    // Remover separadores de milhar (.) mantendo decimal final
-    // Ex.: "1.234,56" -> "1234.56" | "1234.56" -> "1234.56"
     return parseFloat(s);
   }
 
@@ -68,7 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const state = JSON.parse(raw);
       if (!state || !Array.isArray(state.boxes)) return { activeBoxId: null, boxes: [] };
       return state;
-    } catch (_) {
+    } catch {
       return { activeBoxId: null, boxes: [] };
     }
   }
