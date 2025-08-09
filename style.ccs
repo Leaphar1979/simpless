@@ -43,6 +43,14 @@ label{display:block;margin:.6rem 0}
 input[type="text"], input[type="number"]{
   width:100%;padding:.7rem;border:1px solid #ddd;border-radius:10px;font-size:16px;
 }
+input[type="number"]{ /* Melhor UX no mobile */
+  -moz-appearance: textfield;
+}
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button{
+  -webkit-appearance: none; margin: 0;
+}
+
 fieldset.period-field{
   border:1px solid #eee;border-radius:10px;padding:.6rem;margin:.6rem 0;
 }
@@ -59,7 +67,9 @@ fieldset label{margin-right:1rem}
 .color-dot{width:8px;height:20px;border-radius:4px}
 .badge{background:#eef1f6;border-radius:999px;padding:.1rem .5rem;color:#333;font-size:.75rem}
 
-.total-wrap{display:flex;gap:.6rem;justify-content:space-between;align-items:center;margin-top:.8rem}
+.total-wrap{
+  display:flex;gap:.6rem;justify-content:space-between;align-items:center;margin-top:.8rem
+}
 .hidden{display:none}
 
 .balance{display:flex;justify-content:space-between;align-items:center;margin:1rem 0}
