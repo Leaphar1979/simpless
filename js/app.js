@@ -89,7 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const y = d.getUTCFullYear();
     const m = String(d.getUTCMonth()+1).padStart(2,"0");
     const day = String(d.getUTCDate()).padStart(2,"0");
-    if (box.period === "diario")  return `${y}-${m}-${day`;
+    if (box.period === "diario")  return `${y}-${m}-${day}`;
     if (box.period === "mensal")  return `${y}-${m}`;
     return `W:${weekKeyUTC3(d)}`; // semanal
   }
