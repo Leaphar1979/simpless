@@ -37,7 +37,16 @@ document.addEventListener("DOMContentLoaded", () => {
   const editName    = el("editName");
   const editAmount  = el("editAmount");
 
-  // ===== Utilitários de data/moeda =====
+  // ===== Utilitários de número/data/moeda =====
+  function parseNum(input) {
+    // Aceita "12,34" e "12.34", ignora espaços
+    if (typeof input !== "string" && typeof input !== "number") return NaN;
+    const s = String(input).trim().replace(/\./g, "").replace(",", ".");
+    // Remover separadores de milhar (.) mantendo decimal final
+    // Ex.: "1.234,56" -> "1234.56" | "1234.56" -> "1234.56"
+    return parseFloat(s);
+  }
+
   function nowUtcMinus3() {
     const d = new Date();
     d.setUTCHours(d.getUTCHours() + TZ_OFFSET_HOURS);
@@ -53,7 +62,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ===== Persistência =====
   function load() {
-    return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{"activeBoxId":null,"boxes":[]}');
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return { activeBoxId: null, boxes: [] };
+      const state = JSON.parse(raw);
+      if (!state || !Array.isArray(state.boxes)) return { activeBoxId: null, boxes: [] };
+      return state;
+    } catch (_) {
+      return { activeBoxId: null, boxes: [] };
+    }
   }
   function save(state) { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
 
@@ -72,7 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const y = d.getUTCFullYear();
     const m = String(d.getUTCMonth()+1).padStart(2,"0");
     const day = String(d.getUTCDate()).padStart(2,"0");
-    if (box.period === "diario")  return `${y}-${m}-${day}`;
+    if (box.period === "diario")  return `${y}-${m}-${day`;
     if (box.period === "mensal")  return `${y}-${m}`;
     return `W:${weekKeyUTC3(d)}`; // semanal
   }
@@ -219,7 +236,8 @@ document.addEventListener("DOMContentLoaded", () => {
       edit.textContent = "Editar";
       edit.addEventListener("click", ()=>{
         const nv = prompt("Novo valor:", String(e.amount));
-        const p = parseFloat(nv);
+        if (nv === null) return; // cancelado
+        const p = parseNum(nv);
         if (!isNaN(p) && p>0){
           const state = load();
           const b = state.boxes.find(b=> b.id === state.activeBoxId);
@@ -261,7 +279,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   createBox.addEventListener("click", ()=>{
     const name = boxNameInp.value.trim();
-    const amount = parseFloat(boxAmtInp.value);
+    const amount = parseNum(boxAmtInp.value);
     const period = getRadio("period");
     if (!name || isNaN(amount) || amount <= 0){
       alert("Preencha nome e valor válidos.");
@@ -295,7 +313,7 @@ document.addEventListener("DOMContentLoaded", () => {
   backBtn.addEventListener("click", renderDashboard);
 
   addExpense.addEventListener("click", ()=>{
-    const v = parseFloat(expenseVal.value);
+    const v = parseNum(expenseVal.value);
     if (isNaN(v) || v <= 0){
       alert("Valor inválido.");
       return;
@@ -328,7 +346,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const box = state.boxes.find(b => b.id === state.activeBoxId);
 
     const newName   = editName.value.trim();
-    const newAmount = parseFloat(editAmount.value);
+    const newAmount = parseNum(editAmount.value);
     const newPeriod = getRadio("editPeriod");
     if (!newName || isNaN(newAmount) || newAmount <= 0){
       alert("Preencha dados válidos.");
