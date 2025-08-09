@@ -3,122 +3,175 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Simple$ - Controle Diário</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>Simple$$ — Múltiplas Caixas</title>
 
-  <!-- iOS (tela inicial) -->
-  <link rel="apple-touch-icon" href="apple-touch-icon.png">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-title" content="Simple$">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <!-- CSS externo -->
+  <link rel="stylesheet" href="./style.css?v=3" />
 
-  <!-- PWA -->
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#f7941d">
+  <!-- CSS crítico inline -->
+  <style>
+    :root{
+      --bg:#f2f4f8; --fg:#222; --card:#fff; --muted:#666;
+      --primary:#0d6efd; --danger:#dc3545; --ok:#28a745;
+    }
+    *{box-sizing:border-box}
+    body{font-family:"Segoe UI",system-ui,-apple-system,Arial,sans-serif;
+      background:var(--bg);color:var(--fg);margin:0;}
+    main{max-width:700px;margin:0 auto;min-height:100dvh;padding:1.2rem}
+    .topbar{display:flex;align-items:center;gap:.6rem}
+    .topbar h1{margin:.2rem 0;font-size:1.6rem}
+    .subtitle{color:var(--muted);font-size:.9rem}
+    .panel-head{display:flex;justify-content:space-between;align-items:center;margin:.5rem 0}
+    .card{background:var(--card);border-radius:12px;padding:1rem;
+      box-shadow:0 2px 10px rgba(0,0,0,.05);margin:.8rem 0;}
+    button{border:none;border-radius:10px;padding:.7rem 1rem;cursor:pointer;font-size:1rem;}
+    button.primary{background:var(--primary);color:#fff}
+    button.ghost{background:#e9eef6;color:#111}
+    button.danger{background:var(--danger);color:#fff}
+    .box-list{list-style:none;padding:0;margin:0}
+    .box-item{display:flex;justify-content:space-between;align-items:center;
+      padding:.8rem 1rem;border-radius:12px;background:#fff;
+      box-shadow:0 1px 6px rgba(0,0,0,.04);margin:.6rem 0;cursor:pointer}
+    .box-left{display:flex;align-items:center;gap:.8rem}
+    .color-dot{width:8px;height:20px;border-radius:4px}
+    .badge{background:#eef1f6;border-radius:999px;padding:.1rem .5rem;color:#333;font-size:.75rem}
+    .balance-positive{color:var(--ok)}
+    .balance-negative{color:var(--danger)}
+    footer.foot{margin:2rem 0 1rem;color:#777;text-align:center;font-size:.85rem}
+    fieldset.period-field{border:1px solid #eee;border-radius:10px;padding:.6rem;margin:.6rem 0;}
+    .hidden{display:none}
+    .actions{display:flex;gap:.6rem;justify-content:flex-end;margin-top:1rem}
+    input[type="text"],input[type="number"]{
+      width:100%;padding:.7rem;border:1px solid #ddd;border-radius:10px;font-size:16px;
+    }
+    .row{display:flex;gap:.6rem;align-items:center}
+    .row.end{justify-content:flex-end}
+    .expense-list{list-style:none;padding:0;margin:0}
+    .exp-item{
+      display:flex;justify-content:space-between;align-items:center;
+      border-bottom:1px solid #eee;padding:.5rem 0
+    }
+    .exp-item .actions{display:flex;gap:.4rem}
+    .edit-btn{background:#ffc107;color:#111;border:none;border-radius:8px;padding:.35rem .6rem;cursor:pointer;font-size:.85rem}
+    .del-btn{background:var(--danger);color:#fff;border:none;border-radius:8px;padding:.35rem .6rem;cursor:pointer;font-size:.85rem}
+  </style>
 </head>
 <body>
   <main>
-    <!-- DASHBOARD -->
-    <section id="dashboard" class="card">
-      <header class="header">
-        <h1>Simple$</h1>
-        <div class="header-actions">
-          <button id="newBoxBtn" class="btn primary">Nova caixa</button>
-          <button id="resetAll" class="btn danger">Resetar tudo</button>
-        </div>
-      </header>
+    <header class="topbar">
+      <h1>💵 Simple$$</h1>
+      <span class="subtitle">Caixas simples por período</span>
+    </header>
 
-      <div id="totalWrap" class="total hidden">
-        <span>Total geral:</span>
-        <strong id="totalBalance" class="total-balance">R$ 0,00</strong>
+    <!-- Painel -->
+    <section id="dashboard">
+      <div class="panel-head">
+        <h2>Caixas</h2>
+        <div>
+          <button id="newBoxBtn" class="primary">+ Nova caixa</button>
+          <button id="resetAll" class="danger">Reset</button>
+        </div>
       </div>
 
       <ul id="boxList" class="box-list"></ul>
 
-      <!-- Form nova caixa -->
-      <div id="newBoxForm" class="form-panel hidden">
-        <h2>Criar nova caixa</h2>
-        <label>
-          Nome da caixa
-          <input id="boxName" type="text" placeholder="Ex.: Mercado, Combustível, Lazer" />
+      <div id="totalWrap" class="total-wrap hidden">
+        <span>Total</span>
+        <strong id="totalBalance">R$ 0,00</strong>
+      </div>
+
+      <!-- Formulário de nova caixa -->
+      <div id="newBoxForm" class="card hidden">
+        <h3>Nova Caixa</h3>
+
+        <label>Nome da caixa
+          <input type="text" id="boxName" placeholder="Ex.: Mercado" />
         </label>
 
-        <label>
-          Valor por período (R$)
-          <input id="boxAmount" type="number" inputmode="decimal" placeholder="Ex.: 35" />
-        </label>
-
-        <fieldset class="radio-group">
-          <legend>Período</legend>
+        <fieldset class="period-field">
+          <legend>Período de controle</legend>
           <label><input type="radio" name="period" value="diario" checked /> Diário</label>
           <label><input type="radio" name="period" value="semanal" /> Semanal</label>
           <label><input type="radio" name="period" value="mensal" /> Mensal</label>
         </fieldset>
 
-        <div class="row gap">
-          <button id="createBox" class="btn primary">Criar</button>
-          <button id="cancelNewBox" class="btn">Cancelar</button>
+        <label>Valor para o período
+          <input type="number" id="boxAmount" placeholder="Ex.: 50" />
+        </label>
+
+        <div class="actions">
+          <button id="cancelNewBox" class="ghost">Cancelar</button>
+          <button id="createBox" class="primary">Criar Caixa</button>
         </div>
       </div>
     </section>
 
-    <!-- BOX VIEW -->
-    <section id="boxView" class="card hidden">
-      <div class="toolbar">
-        <button id="backToDashboard" class="btn">&larr; Voltar</button>
+    <!-- Visão da Caixa -->
+    <section id="boxView" class="hidden">
+      <button class="ghost back" id="backToDashboard">← Voltar</button>
+
+      <div class="box-header">
+        <div class="color-bar" id="boxColor"></div>
+        <div class="box-title">
+          <h2 id="boxNameTitle">Caixa</h2>
+          <div id="boxMeta" class="meta"></div>
+        </div>
       </div>
 
-      <div id="boxColor" class="color-bar"></div>
-
-      <header class="box-header">
-        <h2 id="boxNameTitle" class="box-title">—</h2>
-        <div id="boxMeta" class="meta">—</div>
-      </header>
-
-      <div class="balance-line">
-        <span>Saldo:</span>
+      <div class="balance">
+        <span>Saldo</span>
         <strong id="boxBalance" class="balance-positive">R$ 0,00</strong>
       </div>
 
-      <div class="actions-row">
-        <input id="expenseValue" type="number" inputmode="decimal" placeholder="Adicionar gasto (R$)" />
-        <button id="addExpense" class="btn primary">Adicionar</button>
-        <button id="editBox" class="btn">Editar caixa</button>
-        <button id="deleteBox" class="btn danger">Excluir caixa</button>
+      <div class="card">
+        <h3>Registrar gasto</h3>
+        <div class="row">
+          <input type="number" id="expenseValue" placeholder="Valor do gasto" />
+          <button id="addExpense" class="primary">Adicionar</button>
+        </div>
       </div>
 
-      <h3>Gastos do período</h3>
-      <ul id="expenseList" class="exp-list"></ul>
+      <div class="card">
+        <h3>Gastos do período</h3>
+        <ul id="expenseList" class="expense-list"></ul>
+      </div>
 
-      <!-- Editar caixa -->
-      <div id="editBoxForm" class="form-panel hidden">
-        <h3>Editar caixa</h3>
+      <div class="row end">
+        <button id="editBox" class="ghost">Editar caixa</button>
+        <button id="deleteBox" class="danger">Excluir caixa</button>
+      </div>
 
-        <label>
-          Nome
-          <input id="editName" type="text" />
+      <!-- Editor da caixa -->
+      <div id="editBoxForm" class="card hidden">
+        <h3>Editar Caixa</h3>
+
+        <label>Nome
+          <input type="text" id="editName" />
         </label>
 
-        <label>
-          Valor por período (R$)
-          <input id="editAmount" type="number" inputmode="decimal" />
-        </label>
-
-        <fieldset class="radio-group">
+        <fieldset class="period-field">
           <legend>Período</legend>
           <label><input type="radio" name="editPeriod" value="diario" /> Diário</label>
           <label><input type="radio" name="editPeriod" value="semanal" /> Semanal</label>
           <label><input type="radio" name="editPeriod" value="mensal" /> Mensal</label>
         </fieldset>
 
-        <div class="row gap">
-          <button id="saveEdit" class="btn primary">Salvar</button>
-          <button id="cancelEdit" class="btn">Cancelar</button>
+        <label>Valor por período
+          <input type="number" id="editAmount" />
+        </label>
+
+        <div class="actions">
+          <button id="cancelEdit" class="ghost">Cancelar</button>
+          <button id="saveEdit" class="primary">Salvar</button>
         </div>
       </div>
     </section>
+
+    <footer class="foot">
+      <small>Simple$$ — minimalista, local e privado • UTC-3</small>
+    </footer>
   </main>
 
-  <script src="script.js"></script>
+  <script src="./js/app.js?v=3" defer></script>
 </body>
 </html>
