@@ -5,10 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Simple$$ — Múltiplas Caixas</title>
 
-  <!-- CSS externo (caminho absoluto no Pages) -->
-  <link rel="stylesheet" href="/simpless/style.css?v=6" />
+  <!-- Manifest PWA -->
+  <link rel="manifest" href="/simpless/manifest.json">
+  <meta name="theme-color" content="#f7941d">
 
-  <!-- CSS crítico inline -->
+  <!-- iOS (melhora instalação na tela inicial) -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Simple$$">
+  <link rel="apple-touch-icon" href="/simpless/icons/icon-192.png">
+
+  <!-- CSS externo (caminho absoluto no Pages) -->
+  <link rel="stylesheet" href="/simpless/style.css?v=8" />
+
+  <!-- CSS crítico inline (seu estilo mantido) -->
   <style>
     :root{
       --bg:#f2f4f8; --fg:#222; --card:#fff; --muted:#666;
@@ -173,6 +183,6 @@
   </main>
 
   <!-- JS (caminho absoluto no Pages) -->
-  <script src="/simpless/js/app.js?v=6" defer></script>
+  <script src="/simpless/js/app.js?v=8" defer></script>
 </body>
 </html>
