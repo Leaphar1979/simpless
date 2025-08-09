@@ -6,9 +6,9 @@
   <title>Simple$$ — Múltiplas Caixas</title>
 
   <!-- CSS externo -->
-  <link rel="stylesheet" href="./style.css?v=3" />
+  <link rel="stylesheet" href="./style.css?v=4" />
 
-  <!-- CSS crítico inline -->
+  <!-- CSS crítico inline (mantido do seu arquivo) -->
   <style>
     :root{
       --bg:#f2f4f8; --fg:#222; --card:#fff; --muted:#666;
@@ -96,7 +96,7 @@
         </fieldset>
 
         <label>Valor para o período
-          <input type="number" id="boxAmount" placeholder="Ex.: 50" />
+          <input type="number" id="boxAmount" inputmode="decimal" step="0.01" placeholder="Ex.: 50,00" />
         </label>
 
         <div class="actions">
@@ -126,7 +126,7 @@
       <div class="card">
         <h3>Registrar gasto</h3>
         <div class="row">
-          <input type="number" id="expenseValue" placeholder="Valor do gasto" />
+          <input type="number" id="expenseValue" inputmode="decimal" step="0.01" placeholder="Valor do gasto" />
           <button id="addExpense" class="primary">Adicionar</button>
         </div>
       </div>
@@ -157,7 +157,7 @@
         </fieldset>
 
         <label>Valor por período
-          <input type="number" id="editAmount" />
+          <input type="number" id="editAmount" inputmode="decimal" step="0.01" />
         </label>
 
         <div class="actions">
@@ -172,6 +172,6 @@
     </footer>
   </main>
 
-  <script src="./js/app.js?v=3" defer></script>
+  <script src="./js/app.js?v=4" defer></script>
 </body>
 </html>
