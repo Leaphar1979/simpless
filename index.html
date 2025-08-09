@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Simple$$ — Múltiplas Caixas</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main>
+    <header class="topbar">
+      <h1>Simple$$</h1>
+      <span class="subtitle">Caixas simples por período</span>
+    </header>
+
+    <!-- Painel -->
+    <section id="dashboard">
+      <div class="panel-head">
+        <h2>Caixas</h2>
+        <button id="newBoxBtn" class="primary">+ Nova caixa</button>
+      </div>
+
+      <ul id="boxList" class="box-list"></ul>
+
+      <div id="totalWrap" class="total-wrap hidden">
+        <span>Total</span>
+        <strong id="totalBalance">R$ 0,00</strong>
+      </div>
+
+      <!-- Formulário de nova caixa (inline) -->
+      <div id="newBoxForm" class="card hidden">
+        <h3>Nova Caixa</h3>
+
+        <label>Nome da caixa
+          <input type="text" id="boxName" placeholder="Ex.: Mercado" />
+        </label>
+
+        <fieldset class="period-field">
+          <legend>Período de controle</legend>
+          <label><input type="radio" name="period" value="diario" checked /> Diário</label>
+          <label><input type="radio" name="period" value="semanal" /> Semanal</label>
+          <label><input type="radio" name="period" value="mensal" /> Mensal</label>
+        </fieldset>
+
+        <label>Valor para o período
+          <input type="number" id="boxAmount" placeholder="Ex.: 50" />
+        </label>
+
+        <div class="actions">
+          <button id="cancelNewBox" class="ghost">Cancelar</button>
+          <button id="createBox" class="primary">Criar Caixa</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Visão da Caixa -->
+    <section id="boxView" class="hidden">
+      <button class="ghost back" id="backToDashboard">← Voltar</button>
+
+      <div class="box-header">
+        <div class="color-bar" id="boxColor"></div>
+        <div class="box-title">
+          <h2 id="boxNameTitle">Caixa</h2>
+          <div id="boxMeta" class="meta"></div>
+        </div>
+      </div>
+
+      <div class="balance">
+        <span>Saldo</span>
+        <strong id="boxBalance" class="balance-positive">R$ 0,00</strong>
+      </div>
+
+      <div class="card">
+        <h3>Registrar gasto</h3>
+        <div class="row">
+          <input type="number" id="expenseValue" placeholder="Valor do gasto" />
+          <button id="addExpense" class="primary">Adicionar</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Gastos do período</h3>
+        <ul id="expenseList" class="expense-list"></ul>
+      </div>
+
+      <div class="row end">
+        <button id="editBox" class="ghost">Editar caixa</button>
+        <button id="deleteBox" class="danger">Excluir caixa</button>
+      </div>
+
+      <!-- Editor da caixa -->
+      <div id="editBoxForm" class="card hidden">
+        <h3>Editar Caixa</h3>
+
+        <label>Nome
+          <input type="text" id="editName" />
+        </label>
+
+        <fieldset class="period-field">
+          <legend>Período</legend>
+          <label><input type="radio" name="editPeriod" value="diario" /> Diário</label>
+          <label><input type="radio" name="editPeriod" value="semanal" /> Semanal</label>
+          <label><input type="radio" name="editPeriod" value="mensal" /> Mensal</label>
+        </fieldset>
+
+        <label>Valor por período
+          <input type="number" id="editAmount" />
+        </label>
+
+        <div class="actions">
+          <button id="cancelEdit" class="ghost">Cancelar</button>
+          <button id="saveEdit" class="primary">Salvar</button>
+        </div>
+      </div>
+    </section>
+
+    <footer class="foot">
+      <small>Simple$$ — minimalista, local e privado • UTC‑3</small>
+    </footer>
+  </main>
+
+  <script src="js/app.js" defer></script>
+</body>
+</html>
