@@ -78,7 +78,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function periodKey(box, d = nowUtcMinus3()) {
     const y = d.getUTCFullYear();
     const m = String(d.getUTCMonth()+1).padStart(2,"0");
-    const day = String(d.getUTCDate()).padStart(2,"0");
+       const day = String(d.getUTCDate()).padStart(2,"0");
     if (box.period === "diario") return `${y}-${m}-${day}`; // dia
     if (box.period === "mensal") return `${y}-${m}`;        // mês
     // semanal
@@ -126,6 +126,7 @@ document.addEventListener("DOMContentLoaded", () => {
       dot.style.background = colorForIndex(idx);
 
       const title = document.createElement("div");
+      title.className = "box-title-txt";
       title.innerHTML = `<strong>${box.name}</strong> <span class="badge">${badgeForPeriod(box.period)}</span>`;
 
       left.appendChild(dot);
