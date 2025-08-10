@@ -1,59 +1,77 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sobre — Simple$$</title>
-  <link rel="stylesheet" href="/simpless/style.css">
+  <link rel="stylesheet" href="/simpless/style.css" />
+  <meta name="theme-color" content="#f7941d">
   <style>
     main {
       max-width: 700px;
       margin: 0 auto;
-      padding: 1.5rem;
+      padding: 1.2rem;
+      background: var(--bg);
+      min-height: 100dvh;
     }
     h1 {
+      margin-top: 0;
       font-size: 1.8rem;
-      margin-bottom: 0.5rem;
     }
     p {
-      line-height: 1.6;
+      line-height: 1.5;
+      margin-bottom: 1rem;
     }
-    .license {
-      background: #f9f9f9;
-      border-left: 4px solid #f7941d;
-      padding: 0.8rem;
-      margin-top: 1.5rem;
-      font-size: 0.95rem;
+    .card {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 1rem;
+      box-shadow: 0 2px 10px rgba(0,0,0,.05);
+      margin-top: 1rem;
     }
     a {
       color: var(--primary);
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    .back {
+      display: inline-block;
+      margin-top: 1.5rem;
+      background: var(--primary);
+      color: #fff;
+      padding: .6rem 1rem;
+      border-radius: 10px;
+      text-decoration: none;
     }
   </style>
 </head>
 <body>
   <main>
-    <h1>💵 Simple$$</h1>
-    <p><strong>Simple$$</strong> é um aplicativo de controle de gastos simples, rápido e privado.</p>
-    <p>Funciona diretamente no navegador, pode ser instalado no celular ou no computador, e mantém todos os dados salvos apenas no seu dispositivo.</p>
-
-    <h2>🔐 Privacidade</h2>
-    <p>- Não enviamos seus dados para servidores.<br>
-       - Não há anúncios.<br>
-       - Não há rastreio.</p>
-
-    <h2>📜 Licença</h2>
-    <div class="license">
-      Este software é licenciado sob <strong>Creative Commons BY-NC-ND 4.0</strong>.<br>
-      - Uso pessoal permitido.<br>
-      - Proibido uso comercial.<br>
-      - Proibida a modificação ou distribuição sem autorização.<br>
-      Mais detalhes: <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.pt_BR" target="_blank">Leia a licença completa</a>.
+    <h1>Sobre o Simple$$</h1>
+    <div class="card">
+      <p><strong>Simple$$</strong> é um aplicativo de controle financeiro pessoal minimalista, focado em simplicidade, privacidade e uso totalmente offline.</p>
+      <p>Todos os dados ficam salvos localmente no seu dispositivo, sem coleta de informações ou necessidade de cadastro.</p>
     </div>
 
-    <h2>⚠️ Código-fonte</h2>
-    <p>O código-fonte deste aplicativo não é disponibilizado publicamente para evitar cópias e uso indevido. Qualquer interesse comercial ou técnico deve ser tratado diretamente com o autor.</p>
+    <div class="card">
+      <h2>Licença</h2>
+      <p>Este aplicativo é licenciado sob a licença <strong>Creative Commons BY-NC-ND 4.0</strong>.</p>
+      <p>Isso significa que você pode:</p>
+      <ul>
+        <li>Compartilhar o aplicativo livremente.</li>
+        <li>Utilizá-lo para fins pessoais e não comerciais.</li>
+      </ul>
+      <p>Mas não pode:</p>
+      <ul>
+        <li>Modificar, adaptar ou criar obras derivadas.</li>
+        <li>Usar para fins comerciais.</li>
+      </ul>
+      <p>Mais informações: <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.pt" target="_blank">Creative Commons BY-NC-ND 4.0</a></p>
+    </div>
 
-    <p><a href="/simpless/">← Voltar ao Simple$$</a></p>
+    <a href="/simpless/index.html" class="back">← Voltar</a>
   </main>
 </body>
 </html>
