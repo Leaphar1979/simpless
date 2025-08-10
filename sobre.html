@@ -1,77 +1,119 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sobre — Simple$$</title>
-  <link rel="stylesheet" href="/simpless/style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sobre o Simple$$ (V2)</title>
+
+  <!-- PWA meta (opcional, não interfere no app principal) -->
+  <link rel="manifest" href="/simpless/manifest.json">
   <meta name="theme-color" content="#f7941d">
+  <link rel="apple-touch-icon" sizes="180x180" href="/simpless/icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/simpless/icons/favicon-32.png">
+
   <style>
-    main {
-      max-width: 700px;
-      margin: 0 auto;
-      padding: 1.2rem;
-      background: var(--bg);
-      min-height: 100dvh;
+    :root{
+      --blue:#0d6efd;
+      --text:#333;
+      --muted:#666;
+      --bg:#fdfdfd;
+      --card:#fff;
+      --border:#eaeaea;
     }
-    h1 {
-      margin-top: 0;
-      font-size: 1.8rem;
-    }
-    p {
-      line-height: 1.5;
-      margin-bottom: 1rem;
-    }
-    .card {
-      background: var(--card);
-      border-radius: 12px;
+    *{box-sizing:border-box}
+    body{
+      font-family:"Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+      max-width: 720px;
+      margin: 2rem auto;
       padding: 1rem;
-      box-shadow: 0 2px 10px rgba(0,0,0,.05);
-      margin-top: 1rem;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
     }
-    a {
-      color: var(--primary);
-      text-decoration: none;
+    h1,h2{color:var(--blue);margin: .2rem 0}
+    h1{font-size:1.9rem}
+    h2{font-size:1.25rem;margin-top:1.4rem}
+    p{margin:.6rem 0}
+    ul{margin:.4rem 0 .8rem 1.2rem}
+    a{color:var(--blue);text-decoration:none}
+    a:hover{text-decoration:underline}
+    .card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:12px;
+      padding:1rem;
+      margin:1rem 0;
     }
-    a:hover {
-      text-decoration: underline;
+    .note{color:var(--muted);font-size:.95rem}
+    .cta{
+      display:inline-block;margin-top:.8rem;background:var(--blue);color:#fff;
+      padding:.55rem .9rem;border-radius:10px;text-decoration:none
     }
-    .back {
-      display: inline-block;
-      margin-top: 1.5rem;
-      background: var(--primary);
-      color: #fff;
-      padding: .6rem 1rem;
-      border-radius: 10px;
-      text-decoration: none;
+    footer{
+      margin-top:2rem;
+      font-size:0.92rem;
+      text-align:center;
+      color:var(--muted);
     }
   </style>
 </head>
 <body>
-  <main>
-    <h1>Sobre o Simple$$</h1>
-    <div class="card">
-      <p><strong>Simple$$</strong> é um aplicativo de controle financeiro pessoal minimalista, focado em simplicidade, privacidade e uso totalmente offline.</p>
-      <p>Todos os dados ficam salvos localmente no seu dispositivo, sem coleta de informações ou necessidade de cadastro.</p>
-    </div>
+  <h1>Simple$$ — V2 (Múltiplas Caixas)</h1>
+  <p>O <strong>Simple$$</strong> é um aplicativo web (PWA) de controle financeiro pessoal focado em <em>simplicidade</em>, <em>privacidade</em> e <em>uso offline</em>. Nesta versão V2, você pode criar <strong>múltiplas caixas</strong> por período (diário, semanal e mensal), registrar gastos rapidamente e acompanhar o saldo com <strong>rollover automático</strong>.</p>
 
-    <div class="card">
-      <h2>Licença</h2>
-      <p>Este aplicativo é licenciado sob a licença <strong>Creative Commons BY-NC-ND 4.0</strong>.</p>
-      <p>Isso significa que você pode:</p>
-      <ul>
-        <li>Compartilhar o aplicativo livremente.</li>
-        <li>Utilizá-lo para fins pessoais e não comerciais.</li>
-      </ul>
-      <p>Mas não pode:</p>
-      <ul>
-        <li>Modificar, adaptar ou criar obras derivadas.</li>
-        <li>Usar para fins comerciais.</li>
-      </ul>
-      <p>Mais informações: <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.pt" target="_blank">Creative Commons BY-NC-ND 4.0</a></p>
-    </div>
+  <div class="card">
+    <h2>🔗 Acesso ao App</h2>
+    <p>Use o Simple$$ diretamente no navegador (não precisa instalar nada):<br>
+      <a href="https://leaphar1979.github.io/simpless/" target="_blank">https://leaphar1979.github.io/simpless/</a>
+    </p>
+    <a class="cta" href="/simpless/" target="_self">← Abrir o Simple$$</a>
+  </div>
 
-    <a href="/simpless/index.html" class="back">← Voltar</a>
-  </main>
+  <div class="card">
+    <h2>📲 Instalação (PWA)</h2>
+    <ul>
+      <li><strong>Android (Chrome/Edge):</strong> menu ⋮ → <em>Adicionar à tela inicial</em>.</li>
+      <li><strong>iOS (Safari):</strong> botão de Compartilhar → <em>Adicionar à Tela de Início</em>.</li>
+      <li><strong>Desktop (Chrome/Edge/Brave):</strong> ícone de instalação na barra de endereço.</li>
+    </ul>
+    <p class="note">Dica: se o ícone não atualizar, limpe o cache do site e abra novamente.</p>
+  </div>
+
+  <div class="card">
+    <h2>🔐 Privacidade</h2>
+    <ul>
+      <li>Dados armazenados <strong>apenas no seu dispositivo</strong> (LocalStorage).</li>
+      <li>Sem servidor, sem cadastro, sem telemetria e sem anúncios.</li>
+      <li>Funciona offline após o primeiro acesso.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>📬 Contato</h2>
+    <p>Para dúvidas, sugestões ou feedbacks, fale diretamente no Telegram:<br>
+      <a href="https://t.me/Leapharr" target="_blank">@Leapharr</a>
+    </p>
+  </div>
+
+  <div class="card">
+    <h2>🛡️ Licença</h2>
+    <p>Este projeto está licenciado sob a <strong>Creative Commons BY-NC-ND 4.0</strong>. Em resumo:</p>
+    <ul>
+      <li>✅ Uso pessoal permitido.</li>
+      <li>✅ Pode compartilhar o app com crédito ao autor.</li>
+      <li>🚫 Proibido uso comercial.</li>
+      <li>🚫 Proibido modificar ou distribuir versões alteradas.</li>
+    </ul>
+    <p>Texto completo da licença: <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">https://creativecommons.org/licenses/by-nc-nd/4.0/</a></p>
+  </div>
+
+  <div class="card">
+    <h2>⚠️ Código-fonte</h2>
+    <p>O código-fonte <strong>não é disponibilizado ao usuário final</strong>. Qualquer interesse técnico ou comercial deve ser tratado diretamente com o autor.</p>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 — Simple$$ • <a href="/simpless/">Voltar ao app</a></p>
+  </footer>
 </body>
 </html>
