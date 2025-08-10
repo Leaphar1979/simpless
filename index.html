@@ -13,10 +13,14 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="Simple$$">
-  <link rel="apple-touch-icon" href="/simpless/icons/icon-192.png">
+  <link rel="apple-touch-icon" href="/simpless/icons/apple-touch-icon.png">
+
+  <!-- Favicons (navegadores) -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/simpless/icons/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="64x64" href="/simpless/icons/favicon-64.png">
 
   <!-- CSS externo (caminho absoluto no Pages) -->
-  <link rel="stylesheet" href="/simpless/style.css?v=8" />
+  <link rel="stylesheet" href="/simpless/style.css?v=9" />
 
   <!-- CSS crítico inline (seu estilo mantido) -->
   <style>
@@ -182,7 +186,18 @@
     </footer>
   </main>
 
-  <!-- JS (caminho absoluto no Pages) -->
-  <script src="/simpless/js/app.js?v=8" defer></script>
+  <!-- JS -->
+  <script src="/simpless/js/app.js?v=9" defer></script>
+
+  <!-- Registro do Service Worker para GitHub Pages -->
+  <script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("/simpless/sw.js")
+          .then(reg => console.log("SW registrado:", reg.scope))
+          .catch(err => console.error("Falha ao registrar SW:", err));
+      });
+    }
+  </script>
 </body>
 </html>
