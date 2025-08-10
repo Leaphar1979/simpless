@@ -1,70 +1,69 @@
-const CACHE_NAME = "simple-cache-v1";
+/* Service Worker - Simple$$ */
+const CACHE_NAME = "simpless-cache-v1.0.1"; // aumente a versão quando publicar mudanças
+
+// IMPORTANTE: usar o prefixo /simpless/ pois o app roda nesse subcaminho no GitHub Pages
 const ASSETS = [
-  "/",                  // raiz
-  "/index.html",        // HTML principal
-  "/style.css",         // CSS
-  "/script.js",         // JS principal
-  "/manifest.json",     // Manifesto PWA
-  "/icons/icon-192.png",
-  "/icons/icon-512.png",
-  "/icons/maskable-512.png",
-  "/icons/apple-touch-icon.png",
-  "/icons/favicon-64.png",
-  "/icons/favicon-32.png"
+  "/simpless/",
+  "/simpless/index.html",
+  "/simpless/style.css",
+  "/simpless/js/app.js",
+  "/simpless/manifest.json",
+  "/simpless/icons/icon-192.png",
+  "/simpless/icons/icon-512.png",
+  "/simpless/icons/maskable-512.png",
+  "/simpless/icons/apple-touch-icon.png",
+  "/simpless/icons/favicon-64.png",
+  "/simpless/icons/favicon-32.png"
 ];
 
-// Instala o Service Worker e adiciona arquivos ao cache
-self.addEventListener("install", event => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => {
-      return cache.addAll(ASSETS);
-    })
-  );
+// Instala e pré-carrega assets essenciais
+self.addEventListener("install", (event) => {
+  event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS)));
   self.skipWaiting();
 });
 
-// Ativa o SW e remove caches antigos
-self.addEventListener("activate", event => {
+// Ativa e remove caches antigos
+self.addEventListener("activate", (event) => {
   event.waitUntil(
-    caches.keys().then(keys => {
-      return Promise.all(
-        keys.filter(key => key !== CACHE_NAME)
-            .map(key => caches.delete(key))
-      );
-    })
+    caches.keys().then((keys) =>
+      Promise.all(keys.map((k) => (k !== CACHE_NAME ? caches.delete(k) : null)))
+    )
   );
   self.clients.claim();
 });
 
-// Estratégia: rede primeiro para HTML, cache para assets
-self.addEventListener("fetch", event => {
+// Estratégias:
+// - HTML (navegação): Network First → pega versão nova quando online, cai no cache se offline
+// - Demais (CSS/JS/ícones): Stale-While-Revalidate → rápido e atualiza em background
+self.addEventListener("fetch", (event) => {
   const { request } = event;
+  const accept = request.headers.get("accept") || "";
 
-  // Rede primeiro para HTML
-  if (request.mode === "navigate") {
+  // Trata navegação/HTML
+  if (request.mode === "navigate" || accept.includes("text/html")) {
     event.respondWith(
       fetch(request)
-        .then(response => {
-          const copy = response.clone();
-          caches.open(CACHE_NAME).then(cache => cache.put(request, copy));
-          return response;
+        .then((res) => {
+          const copy = res.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(request, copy));
+          return res;
         })
         .catch(() => caches.match(request))
     );
     return;
   }
 
-  // Cache primeiro para demais arquivos (CSS, JS, imagens, etc.)
+  // Outros recursos (CSS/JS/imagens)
   event.respondWith(
-    caches.match(request).then(cached => {
-      return (
-        cached ||
-        fetch(request).then(response => {
-          const copy = response.clone();
-          caches.open(CACHE_NAME).then(cache => cache.put(request, copy));
-          return response;
+    caches.match(request).then((cached) => {
+      const fetched = fetch(request)
+        .then((res) => {
+          const copy = res.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(request, copy));
+          return res;
         })
-      );
+        .catch(() => cached);
+      return cached || fetched;
     })
   );
 });
