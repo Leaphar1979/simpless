@@ -15,10 +15,9 @@
   <meta name="apple-mobile-web-app-title" content="Simple$$">
   <link rel="apple-touch-icon" href="/simpless/icons/icon-192.png">
 
-  <!-- CSS externo -->
+  <!-- CSS -->
   <link rel="stylesheet" href="/simpless/style.css?v=8" />
 
-  <!-- CSS crítico inline -->
   <style>
     :root{
       --bg:#f2f4f8; --fg:#222; --card:#fff; --muted:#666;
@@ -48,6 +47,8 @@
     .balance-positive{color:var(--ok)}
     .balance-negative{color:var(--danger)}
     footer.foot{margin:2rem 0 1rem;color:#777;text-align:center;font-size:.85rem}
+    footer.foot a{color:var(--muted);text-decoration:none;font-size:.8rem}
+    footer.foot a:hover{text-decoration:underline}
     fieldset.period-field{border:1px solid #eee;border-radius:10px;padding:.6rem;margin:.6rem 0;}
     .hidden{display:none}
     .actions{display:flex;gap:.6rem;justify-content:flex-end;margin-top:1rem}
@@ -178,7 +179,8 @@
     </section>
 
     <footer class="foot">
-      <small>Simple$$ — minimalista, local e privado • UTC-3</small>
+      <small>Simple$$ — minimalista, local e privado • UTC-3</small><br>
+      <a href="/simpless/sobre.html">Sobre</a>
     </footer>
   </main>
 
@@ -190,8 +192,8 @@
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('/simpless/sw.js')
-          .then(reg => console.log('Service Worker registrado com sucesso:', reg.scope))
-          .catch(err => console.log('Erro ao registrar Service Worker:', err));
+          .then(reg => console.log('Service Worker registrado com sucesso.', reg))
+          .catch(err => console.warn('Falha ao registrar Service Worker.', err));
       });
     }
   </script>
