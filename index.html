@@ -6,19 +6,27 @@
   <title>Simple$$ — Múltiplas Caixas</title>
 
   <!-- Manifest PWA -->
-  <link rel="manifest" href="/simpless/manifest.json">
-  <meta name="theme-color" content="#f7941d">
+  <link rel="manifest" href="/simpless/manifest.json" />
+  <meta name="theme-color" content="#f7941d" />
 
-  <!-- iOS (melhora instalação na tela inicial) -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="apple-mobile-web-app-title" content="Simple$$">
-  <link rel="apple-touch-icon" href="/simpless/icons/icon-192.png">
+  <!-- iOS (ícone e modo app) -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="Simple$$" />
+  <!-- iOS usa preferencialmente 180x180 -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/simpless/icons/apple-touch-icon.png" />
 
-  <!-- CSS externo (caminho absoluto no Pages) -->
+  <!-- Android / navegadores (favicons e ícones fallback) -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/simpless/icons/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="64x64" href="/simpless/icons/favicon-64.png" />
+  <!-- Alguns navegadores Android ainda consultam rel=icon maiores como fallback -->
+  <link rel="icon" type="image/png" sizes="192x192" href="/simpless/icons/icon-192.png" />
+  <link rel="icon" type="image/png" sizes="512x512" href="/simpless/icons/icon-512.png" />
+
+  <!-- CSS -->
   <link rel="stylesheet" href="/simpless/style.css?v=8" />
 
-  <!-- CSS crítico inline -->
+  <!-- CSS crítico inline (mantido) -->
   <style>
     :root{
       --bg:#f2f4f8; --fg:#222; --card:#fff; --muted:#666;
@@ -178,7 +186,9 @@
     </section>
 
     <footer class="foot">
-      <small>Simple$$ — minimalista, local e privado • UTC-3 • 
+      <small>
+        Simple$$ — minimalista, local e privado • UTC-3
+        &nbsp;|&nbsp;
         <a href="/simpless/sobre.html" style="color:inherit;text-decoration:none;">Sobre</a>
       </small>
     </footer>
