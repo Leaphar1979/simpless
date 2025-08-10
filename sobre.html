@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Sobre — Simple$$</title>
+
+  <link rel="manifest" href="/simpless/manifest.json">
+  <meta name="theme-color" content="#f7941d">
+
+  <!-- iOS -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Simple$$">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="apple-touch-icon" href="/simpless/icons/apple-touch-icon.png">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/simpless/icons/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="64x64" href="/simpless/icons/favicon-64.png">
+
+  <link rel="stylesheet" href="/simpless/style.css?v=10">
+  <style>
+    main{max-width:760px;margin:0 auto;padding:1.2rem}
+    .about-card{background:#fff;border-radius:12px;padding:1rem;box-shadow:0 2px 10px rgba(0,0,0,.05)}
+    .muted{color:#666}
+    .space{height:8px}
+    .back{display:inline-block;margin-top:1rem}
+    h1{display:flex;align-items:center;gap:.5rem}
+    .logo{width:28px;height:28px;border-radius:6px;background:#f7941d;display:inline-flex;align-items:center;justify-content:center;color:#fff;font-weight:800}
+    .mono{font-family: ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace; font-size:.95rem}
+  </style>
+</head>
+<body>
+  <main>
+    <div class="about-card">
+      <h1><span class="logo">$$</span> Sobre o Simple$$</h1>
+      <p>Simple$$ é um aplicativo web progressivo (PWA) para controle de gastos por caixas e períodos (diário, semanal, mensal). É leve, funciona offline e salva os dados somente no seu dispositivo.</p>
+
+      <h2>Privacidade</h2>
+      <p>O Simple$$ não coleta, envia ou armazena dados em servidores. Todas as informações ficam no seu navegador (LocalStorage).</p>
+
+      <h2>Licença</h2>
+      <p class="mono">Este software é licenciado sob a <strong>Simple$$ Proprietary License</strong>. Consulte o arquivo <code>LICENSE</code> para os termos completos.</p>
+      <ul>
+        <li>Uso pessoal/interno permitido.</li>
+        <li>Proibida a redistribuição, modificação e engenharia reversa, salvo quando permitido por lei.</li>
+        <li>Marcas e elementos visuais protegidos.</li>
+      </ul>
+
+      <h2>Código-fonte</h2>
+      <p><strong>O código-fonte não é disponibilizado ao usuário final.</strong> Este aplicativo é distribuído apenas em formato executável/empacotado para uso no navegador.</p>
+      <p class="muted">Observação: se este site estiver hospedado em um repositório público, o provedor pode exibir os arquivos automaticamente. Para impedir acesso público, configure o repositório como <em>privado</em>.</p>
+
+      <h2>Instalação</h2>
+      <ul>
+        <li><strong>Android/Chrome:</strong> Abra o site, toque no menu ⋮ e escolha <em>Adicionar à tela inicial</em>.</li>
+        <li><strong>iOS/Safari:</strong> Abra o site, toque em <em>Compartilhar</em> → <em>Adicionar à Tela de Início</em>.</li>
+        <li><strong>Desktop:</strong> Clique no ícone de instalação na barra de endereço (Chrome/Edge/Brave).</li>
+      </ul>
+
+      <div class="space"></div>
+      <a class="back" href="/simpless/">← Voltar ao Simple$$</a>
+    </div>
+  </main>
+
+  <script>
+    // (Opcional) Registrar o SW também aqui
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/simpless/sw.js').catch(()=>{});
+      });
+    }
+  </script>
+</body>
+</html>
