@@ -1,12 +1,12 @@
 /* sw.js — Simple$$ PWA */
-const CACHE_VERSION = "v1.0.2";                  // ↑ aumente ao publicar
+const CACHE_VERSION = "v1.0.2";                  // Aumente ao publicar mudanças
 const CACHE_NAME = `simpless-${CACHE_VERSION}`;
 
 const ASSETS = [
   "/simpless/",
   "/simpless/index.html",
-  "/simpless/style.css",
-  "/simpless/js/app.js",
+  "/simpless/style.css?v=8",
+  "/simpless/js/app.js?v=8",
   "/simpless/manifest.json",
   "/simpless/icons/icon-192.png",
   "/simpless/icons/icon-512.png",
@@ -32,7 +32,7 @@ self.addEventListener("activate", (event) => {
   self.clients.claim();
 });
 
-// HTML: Network First | Demais (CSS/JS/ícones): Stale-While-Revalidate
+// HTML: Network First | Outros: Stale-While-Revalidate
 self.addEventListener("fetch", (event) => {
   const req = event.request;
   const accept = req.headers.get("accept") || "";
@@ -51,7 +51,7 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  // Demais recursos
+  // Outros recursos
   event.respondWith(
     caches.match(req).then((cached) => {
       const fetched = fetch(req)
