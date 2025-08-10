@@ -1,15 +1,43 @@
 {
-  "name": "Simple$$",
+  "name": "Simple$$ — Múltiplas Caixas",
   "short_name": "Simple$$",
-  "description": "Controle de gastos por caixas e períodos. Rápido, local e privado.",
-  "start_url": "/simpless/",
+  "description": "Controle simples de múltiplas caixas por período. Funciona offline, totalmente local e privado.",
+  "start_url": "/simpless/index.html",
   "scope": "/simpless/",
   "display": "standalone",
   "background_color": "#f2f4f8",
   "theme_color": "#f7941d",
   "icons": [
-    { "src": "/simpless/icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
-    { "src": "/simpless/icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
-    { "src": "/simpless/icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+    {
+      "src": "/simpless/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/simpless/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/simpless/icons/maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/simpless/icons/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/simpless/icons/favicon-32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/simpless/icons/favicon-64.png",
+      "sizes": "64x64",
+      "type": "image/png"
+    }
   ]
 }
