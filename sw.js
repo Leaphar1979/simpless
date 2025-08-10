@@ -1,7 +1,7 @@
-/* Service Worker - Simple$$ */
-const CACHE_NAME = "simpless-cache-v1.0.1"; // aumente a versão quando publicar mudanças
+/* sw.js — Simple$$ PWA */
+const CACHE_VERSION = "v1.0.2";                  // ↑ aumente ao publicar
+const CACHE_NAME = `simpless-${CACHE_VERSION}`;
 
-// IMPORTANTE: usar o prefixo /simpless/ pois o app roda nesse subcaminho no GitHub Pages
 const ASSETS = [
   "/simpless/",
   "/simpless/index.html",
@@ -16,9 +16,9 @@ const ASSETS = [
   "/simpless/icons/favicon-32.png"
 ];
 
-// Instala e pré-carrega assets essenciais
+// Instala e pré-carrega os assets essenciais
 self.addEventListener("install", (event) => {
-  event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS)));
+  event.waitUntil(caches.open(CACHE_NAME).then((c) => c.addAll(ASSETS)));
   self.skipWaiting();
 });
 
@@ -32,34 +32,32 @@ self.addEventListener("activate", (event) => {
   self.clients.claim();
 });
 
-// Estratégias:
-// - HTML (navegação): Network First → pega versão nova quando online, cai no cache se offline
-// - Demais (CSS/JS/ícones): Stale-While-Revalidate → rápido e atualiza em background
+// HTML: Network First | Demais (CSS/JS/ícones): Stale-While-Revalidate
 self.addEventListener("fetch", (event) => {
-  const { request } = event;
-  const accept = request.headers.get("accept") || "";
+  const req = event.request;
+  const accept = req.headers.get("accept") || "";
 
-  // Trata navegação/HTML
-  if (request.mode === "navigate" || accept.includes("text/html")) {
+  // Navegação/HTML
+  if (req.mode === "navigate" || accept.includes("text/html")) {
     event.respondWith(
-      fetch(request)
+      fetch(req)
         .then((res) => {
           const copy = res.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(request, copy));
+          caches.open(CACHE_NAME).then((c) => c.put(req, copy));
           return res;
         })
-        .catch(() => caches.match(request))
+        .catch(() => caches.match(req))
     );
     return;
   }
 
-  // Outros recursos (CSS/JS/imagens)
+  // Demais recursos
   event.respondWith(
-    caches.match(request).then((cached) => {
-      const fetched = fetch(request)
+    caches.match(req).then((cached) => {
+      const fetched = fetch(req)
         .then((res) => {
           const copy = res.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(request, copy));
+          caches.open(CACHE_NAME).then((c) => c.put(req, copy));
           return res;
         })
         .catch(() => cached);
