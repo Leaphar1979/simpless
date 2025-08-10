@@ -1,41 +1,67 @@
-# 💵 Simple$$ — Controle de Gastos Pessoal
+# 💵 Simple$$
 
-**Simple$$** é um aplicativo **simples, rápido e privado** para controle diário, semanal ou mensal de gastos.  
-Funciona direto no navegador e pode ser instalado como **PWA** no celular ou no computador.  
-**Todos os dados ficam salvos somente no seu dispositivo**.
-
----
-
-## 📌 Recursos
-- **Múltiplas caixas** para organizar diferentes orçamentos.
-- **Período configurável**: diário, semanal ou mensal.
-- **Acúmulo automático** de saldo não gasto.
-- **Registro rápido** de despesas.
-- **Instalável** em Android, iOS e desktop.
-- **Funciona offline**.
+**Simple$$** é um aplicativo de controle de gastos simples, rápido e totalmente privado.  
+Funciona direto no navegador, pode ser instalado como app (PWA) e mantém todos os dados salvos apenas no seu dispositivo.
 
 ---
 
-## 📲 Como instalar
-- **Android (Chrome/Edge)**: menu ⋮ → *Adicionar à tela inicial*.
-- **iOS (Safari)**: botão de compartilhamento → *Adicionar à Tela de Início*.
-- **Computador**: botão de instalação na barra de endereço.
+## 📌 Funcionalidades
+
+- 📱 **Instalação como App** (Android, iOS e Desktop)  
+- 💾 **Armazenamento local** — seus dados não saem do seu dispositivo  
+- 🔄 **Funciona offline**  
+- ⚡ **Interface rápida e minimalista**  
+- 🗂️ **Controle de múltiplas caixas** por período (diário, semanal ou mensal)  
+- 📊 **Saldo atualizado automaticamente** conforme os gastos
 
 ---
 
 ## 🔐 Privacidade
-- Seus dados ficam **apenas no seu dispositivo**.
-- Não há envio para servidores.
-- Sem anúncios, sem rastreio.
+
+- Não coletamos dados.  
+- Não exibimos anúncios.  
+- Não rastreamos usuários.  
+
+Todos os registros ficam **100% no seu dispositivo**.
 
 ---
 
-## 🧾 Licença
-Uso pessoal permitido.  
-Proibida a cópia, modificação ou distribuição sem autorização.  
-Consulte mais detalhes na [página Sobre](https://<seu-usuario>.github.io/simpless/sobre.html).
+## 📜 Licença
+
+Este software é licenciado sob **Creative Commons BY-NC-ND 4.0**.
+
+- **Uso pessoal permitido**.  
+- **Proibido uso comercial**.  
+- **Proibida modificação ou distribuição** sem autorização.  
+
+📄 Mais detalhes: [Leia a licença completa](https://creativecommons.org/licenses/by-nc-nd/4.0/deed.pt_BR)
 
 ---
 
-**Acesse agora:**  
-🔗 [Abrir Simple$$](https://<seu-usuario>.github.io/simpless/)
+## ⚠️ Código-fonte
+
+O código-fonte **não é disponibilizado publicamente** para evitar cópias e uso indevido.  
+Para qualquer interesse técnico ou comercial, entre em contato diretamente com o autor.
+
+---
+
+## 📥 Instalação
+
+### Android (Chrome/Edge)
+1. Acesse: **[Simple$$ no navegador](https://leaphar1979.github.io/simpless/)**
+2. Toque no menu ⋮ e escolha **"Adicionar à tela inicial"**.
+
+### iOS (Safari)
+1. Acesse o mesmo link.  
+2. Toque no botão de compartilhamento e selecione **"Adicionar à Tela de Início"**.
+
+### Desktop (Chrome, Edge, Brave)
+1. Abra o link no navegador.  
+2. Clique no ícone de instalação na barra de endereços.
+
+---
+
+## ✉️ Contato
+
+📲 **Telegram:** [@Leapharr](https://t.me/Leapharr)  
+🌐 **Acesse o Simple$$:** [https://leaphar1979.github.io/simpless/](https://leaphar1979.github.io/simpless/)  
