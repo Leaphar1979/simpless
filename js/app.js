@@ -39,10 +39,30 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ===== Utilitários de número/data/moeda =====
   function parseNum(input) {
-    // Aceita "12,34" e "12.34"; remove separador de milhar.
     if (typeof input !== "string" && typeof input !== "number") return NaN;
-    const s = String(input).trim().replace(/\./g, "").replace(",", ".");
-    return parseFloat(s);
+
+    // Normaliza: remove "R$", espaços e mantém só dígitos + separadores
+    const s = String(input)
+      .trim()
+      .replace(/\s|R\$\s?/gi, "");
+
+    if (s === "") return NaN;
+
+    // Encontra o ÚLTIMO separador (ponto ou vírgula) e trata como decimal
+    const m = s.match(/[.,](?=[^.,]*$)/); // última , ou .
+    if (m) {
+      const idx = m.index;
+      const intPart  = s.slice(0, idx).replace(/[^\d]/g, "");   // remove não-dígitos
+      const fracPart = s.slice(idx + 1).replace(/[^\d]/g, "");  // idem
+      const normalized = `${intPart}.${fracPart}`;
+      const n = Number.parseFloat(normalized);
+      return Number.isFinite(n) ? n : NaN;
+    }
+
+    // Sem separador decimal: remove não-dígitos e interpreta como inteiro
+    const onlyDigits = s.replace(/[^\d]/g, "");
+    const n = Number.parseFloat(onlyDigits);
+    return Number.isFinite(n) ? n : NaN;
   }
 
   function nowUtcMinus3() {
