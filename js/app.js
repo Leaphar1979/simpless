@@ -102,7 +102,6 @@ document.addEventListener("DOMContentLoaded", () => {
       const parsed = JSON.parse(raw);
       return sanitizeState(parsed);
     } catch {
-      // JSON corrompido → zera somente esta chave
       try { localStorage.removeItem(STORAGE_KEY); } catch {}
       return { activeBoxId: null, boxes: [] };
     }
@@ -120,11 +119,10 @@ document.addEventListener("DOMContentLoaded", () => {
   function colorForIndex(i){ return PALETTE[i % PALETTE.length]; }
 
   function weekKeyUTC3(d = nowUtcMinus3()){
-    // Segunda-feira (ISO-like)
     const t = new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate()));
     const dayIdx = (t.getUTCDay() + 6) % 7; // 0 = segunda
     t.setUTCDate(t.getUTCDate() - dayIdx);
-    return t.toISOString().split("T")[0]; // YYYY-MM-DD (segunda)
+    return t.toISOString().split("T")[0];
   }
 
   function periodKey(box, d = nowUtcMinus3()){
@@ -133,7 +131,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const day = String(d.getUTCDate()).padStart(2,"0");
     if (box.period === "diario")  return `${y}-${m}-${day}`;
     if (box.period === "mensal")  return `${y}-${m}`;
-    return `W:${weekKeyUTC3(d)}`; // semanal
+    return `W:${weekKeyUTC3(d)}`;
   }
 
   function calcBalance(box){
@@ -195,6 +193,17 @@ document.addEventListener("DOMContentLoaded", () => {
   attachNumericSanitizer(expenseVal);
   attachNumericSanitizer(editAmount);
 
+  // ===== Helpers de caixa atual (dataset + fallback) =====
+  function getCurrentBoxId(){
+    const domId = boxView?.dataset?.boxId;
+    if (domId) return domId;
+    const state = load();
+    return state.activeBoxId || null;
+  }
+  function getBoxById(state, id){
+    return state.boxes.find(b => b.id === id) || null;
+  }
+
   // ===== Dashboard =====
   function renderDashboard(){
     const state = load();
@@ -239,6 +248,9 @@ document.addEventListener("DOMContentLoaded", () => {
       totalWrap.classList.add("hidden");
     }
 
+    // Limpamos o id da caixa aberta ao voltar ao dashboard
+    if (boxView?.dataset) delete boxView.dataset.boxId;
+
     dashboard.classList.remove("hidden");
     boxView.classList.add("hidden");
     newBoxForm.classList.add("hidden");
@@ -259,7 +271,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function openBox(id){
     const state = load();
 
-    // ✅ garante que a caixa clicada vire a ativa (corrige débitos caindo na caixa errada)
+    // Garante que a caixa clicada vire a ativa
     if (id && state.activeBoxId !== id) {
       state.activeBoxId = id;
       save(state);
@@ -270,6 +282,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     rolloverIfNeeded(box);
     save(state);
+
+    // ⚠️ Marcamos explicitamente no DOM qual caixa está aberta
+    if (boxView?.dataset) boxView.dataset.boxId = box.id;
 
     // Header
     const idx = state.boxes.findIndex(b => b.id === box.id);
@@ -333,11 +348,12 @@ document.addEventListener("DOMContentLoaded", () => {
       edit.textContent = "Editar";
       edit.addEventListener("click", ()=>{
         const nv = prompt("Novo valor:", String(e.amount).replace(".", ","));
-        if (nv === null) return; // cancelado
+        if (nv === null) return;
         const p = parseNum(nv);
         if (!isNaN(p) && p > 0){
           const state = load();
-          const b = getActiveBox(state);
+          const currentId = getCurrentBoxId();
+          const b = getBoxById(state, currentId);
           if (!b) return renderDashboard();
           rolloverIfNeeded(b);
           b.expenses[i].amount = round2(p);
@@ -351,7 +367,8 @@ document.addEventListener("DOMContentLoaded", () => {
       del.textContent = "Apagar";
       del.addEventListener("click", ()=>{
         const state = load();
-        const b = getActiveBox(state);
+        const currentId = getCurrentBoxId();
+        const b = getBoxById(state, currentId);
         if (!b) return renderDashboard();
         rolloverIfNeeded(b);
         b.expenses.splice(i,1);
@@ -390,7 +407,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const box = {
       id: crypto.randomUUID(),
       name,
-      period,                    // 'diario' | 'semanal' | 'mensal'
+      period,
       amountPerPeriod: round2(amount),
       currentPeriod: periodKey({ period }),
       lastBalance: 0,
@@ -420,7 +437,8 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
     const state = load();
-    const box = getActiveBox(state);
+    const currentId = getCurrentBoxId();
+    const box = getBoxById(state, currentId);
     if (!box) { renderDashboard(); return; }
     rolloverIfNeeded(box);
     box.expenses.push({ amount: round2(v) });
@@ -434,8 +452,8 @@ document.addEventListener("DOMContentLoaded", () => {
   delBoxBtn.addEventListener("click", ()=>{
     if (!confirm("Excluir esta caixa? Esta ação não pode ser desfeita.")) return;
     const state = load();
-    const id = state.activeBoxId;
-    state.boxes = state.boxes.filter(b => b.id !== id);
+    const currentId = getCurrentBoxId();
+    state.boxes = state.boxes.filter(b => b.id !== currentId);
     state.activeBoxId = state.boxes[0]?.id || null;
     save(state);
     renderDashboard();
@@ -445,7 +463,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   el("saveEdit").addEventListener("click", ()=>{
     const state = load();
-    const box = getActiveBox(state);
+    const currentId = getCurrentBoxId();
+    const box = getBoxById(state, currentId);
     if (!box) { renderDashboard(); return; }
 
     const newName   = editName.value.trim();
@@ -472,5 +491,4 @@ document.addEventListener("DOMContentLoaded", () => {
   // ===== Inicialização =====
   renderDashboard();
 });
-
 
