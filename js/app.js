@@ -258,6 +258,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function openBox(id){
     const state = load();
+
+    // ✅ garante que a caixa clicada vire a ativa (corrige débitos caindo na caixa errada)
+    if (id && state.activeBoxId !== id) {
+      state.activeBoxId = id;
+      save(state);
+    }
+
     const box = getActiveBox(state, id);
     if (!box) { renderDashboard(); return; }
 
@@ -465,4 +472,5 @@ document.addEventListener("DOMContentLoaded", () => {
   // ===== Inicialização =====
   renderDashboard();
 });
+
 
